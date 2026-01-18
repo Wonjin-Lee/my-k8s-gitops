@@ -1,0 +1,22 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ include "my-app.fullname" . }}-routing
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - my-gateway
+  http:
+  - match:
+    - headers:
+        end-user:
+          exact: tintin
+    route:
+    - destination:
+        host: {{ include "my-app.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
+        subset: v2
+  - route: # 그 외 모든 경우 (기본값)
+    - destination:
+        host: {{ include "my-app.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
+        subset: v1

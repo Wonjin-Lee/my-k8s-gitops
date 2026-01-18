@@ -1,10 +1,10 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  name: disable-mtls-my-app
+  name: {{ include "my-app.fullname" . }}-destination
   namespace: default
 spec:
-  host: my-sample-app-my-app.default.svc.cluster.local 
+  host: {{ include "my-app.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
   trafficPolicy:
     tls:
       mode: DISABLE
