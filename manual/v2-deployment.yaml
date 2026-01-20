@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app-v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      version: v2
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: my-app
+        app.kubernetes.io/instance: my-sample-app
+        version: v2
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - name: http
+          containerPort: 80
